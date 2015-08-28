@@ -1,0 +1,24 @@
+{
+  "name": "react_todo",
+  "version": "0.1.0",
+  "author": "Ryan Sobol",
+  "license": "MIT",
+  "scripts": {
+    "start": "brunch watch --server",
+    "deploy": "rm -rf public; brunch build; surge public react-todo.surge.sh"
+  },
+  "dependencies": {
+    "react": "^0.13.3"
+  },
+  "overrides": {
+    "react": {
+      "main": "dist/react-with-addons.js"
+    }
+  },
+  "devDependencies": {
+    "babel-brunch": "^5.1.2",
+    "brunch": "^1.8.5",
+    "surge": "^0.14.3"
+  },
+  "private": true
+}
