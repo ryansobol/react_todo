@@ -1,8 +1,10 @@
-var React = require('react');
-
 var Footer = React.createClass({
   pluralize: function(count, word) {
     return count === 1 ? word : word + 's';
+  },
+
+  isSelected: function(type) {
+    return this.props.showing === type ? 'selected' : null;
   },
 
   render: function() {
@@ -14,9 +16,6 @@ var Footer = React.createClass({
       </button>;
     }
 
-    // React idiom for shortcutting to `classSet` since it'll be used often
-    var cx = React.addons.classSet;
-
     return <footer className="footer">
       <span className="todo-count">
         <strong>{this.props.activeCount}</strong>
@@ -26,7 +25,7 @@ var Footer = React.createClass({
       <ul className="filters">
         <li>
           <a
-            className={cx({selected: this.props.showing === 'all'})}
+            className={this.isSelected('all')}
             onClick={this.props.handleShowAll}>
             All
           </a>
@@ -34,7 +33,7 @@ var Footer = React.createClass({
         {' '}
         <li>
           <a
-            className={cx({selected: this.props.showing === 'active'})}
+            className={this.isSelected('active')}
             onClick={this.props.handleShowActive}>
             Active
           </a>
@@ -42,7 +41,7 @@ var Footer = React.createClass({
         {' '}
         <li>
           <a
-            className={cx({selected: this.props.showing === 'completed'})}
+            className={this.isSelected('completed')}
             onClick={this.props.handleShowCompleted}>
             Completed
           </a>

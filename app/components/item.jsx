@@ -1,5 +1,3 @@
-var React = require('react');
-
 var ENTER_KEY = 13;
 var ESCAPE_KEY = 27;
 
@@ -18,7 +16,7 @@ var Item = React.createClass({
 
   componentDidUpdate: function(prevProps) {
     if (!prevProps.editing && this.props.editing) {
-      var node = React.findDOMNode(this.refs.editField);
+      var node = this.refs.editField;
       node.focus();
       node.setSelectionRange(node.value.length, node.value.length);
     }
@@ -38,7 +36,7 @@ var Item = React.createClass({
       this.setState({ title: this.props.todo.title });
       this.props.handleCancel();
     } else if (event.which === ENTER_KEY) {
-      this.handleBlur();
+      this.refs.editField.blur();
     }
   },
 
@@ -54,10 +52,17 @@ var Item = React.createClass({
   },
 
   render: function() {
-    return <li className={React.addons.classSet({
-        completed: this.props.todo.completed,
-        editing: this.props.editing === this.props.todo
-      })}>
+    var classes = [];
+
+    if (this.props.todo.completed) {
+      classes.push('completed');
+    }
+
+    if (this.props.editing === this.props.todo) {
+      classes.push('editing')
+    }
+
+    return <li className={classes.join(' ')}>
       <div className="view">
         <input
           checked={this.props.todo.completed}

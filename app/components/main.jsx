@@ -1,5 +1,4 @@
 var Item = require('./item');
-var React = require('react');
 
 var Main = React.createClass({
   getShownTodos: function() {

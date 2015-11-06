@@ -7,14 +7,6 @@
     "start": "brunch watch --server",
     "deploy": "rm -rf public; brunch build; surge public react-todo.surge.sh"
   },
-  "dependencies": {
-    "react": "^0.13.3"
-  },
-  "overrides": {
-    "react": {
-      "main": "dist/react-with-addons.js"
-    }
-  },
   "devDependencies": {
     "babel-brunch": "^5.1.2",
     "brunch": "^1.8.5",

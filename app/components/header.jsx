@@ -1,14 +1,12 @@
-var React = require('react');
-
 var ENTER_KEY = 13;
 
 var Header = React.createClass({
-  handleKeyDown: function() {
+  handleKeyDown: function(event) {
     if (event.keyCode !== ENTER_KEY) {
       return;
     }
 
-    var node = React.findDOMNode(this.refs.newField);
+    var node = this.refs.newField;
     var title = node.value.trim();
 
     if (!title) {

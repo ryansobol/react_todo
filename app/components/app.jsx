@@ -1,7 +1,6 @@
 var Footer = require('./footer');
 var Header = require('./header');
 var Main = require('./main');
-var React = require('react');
 
 var App = React.createClass({
   getInitialState: function() {
