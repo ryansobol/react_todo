@@ -1,7 +1,7 @@
 var React = require('react');
 
-var ESCAPE_KEY = 27;
 var ENTER_KEY = 13;
+var ESCAPE_KEY = 27;
 
 var Item = React.createClass({
   getInitialState: function() {
@@ -22,39 +22,6 @@ var Item = React.createClass({
       node.focus();
       node.setSelectionRange(node.value.length, node.value.length);
     }
-  },
-
-  render: function() {
-    return (
-      <li className={React.addons.classSet({
-        completed: this.props.todo.completed,
-        editing: this.props.editing === this.props.todo
-      })}>
-        <div className="view">
-          <input
-            className="toggle"
-            type="checkbox"
-            checked={this.props.todo.completed}
-            onChange={this.props.handleToggle}
-          />
-
-          <label onDoubleClick={this.handleEdit.bind(null, this.props.todo)}>
-            {this.props.todo.title}
-          </label>
-
-          <button className="destroy" onClick={this.props.handleDestroy} />
-        </div>
-
-        <input
-          ref="editField"
-          className="edit"
-          value={this.state.title}
-          onChange={this.handleChange}
-          onKeyDown={this.handleKeyDown}
-          onBlur={this.handleBlur}
-        />
-      </li>
-    );
   },
 
   handleEdit: function(todo) {
@@ -84,6 +51,38 @@ var Item = React.createClass({
     } else {
       this.props.handleDestroy();
     }
+  },
+
+  render: function() {
+    return <li className={React.addons.classSet({
+        completed: this.props.todo.completed,
+        editing: this.props.editing === this.props.todo
+      })}>
+      <div className="view">
+        <input
+          checked={this.props.todo.completed}
+          className="toggle"
+          onChange={this.props.handleToggle}
+          type="checkbox"
+        />
+
+        <label onDoubleClick={this.handleEdit.bind(null, this.props.todo)}>
+          {this.props.todo.title}
+        </label>
+
+        <button className="destroy" onClick={this.props.handleDestroy} />
+      </div>
+
+      <input
+        className="edit"
+        ref="editField"
+        onBlur={this.handleBlur}
+        onChange={this.handleChange}
+        onKeyDown={this.handleKeyDown}
+        type="text"
+        value={this.state.title}
+      />
+    </li>;
   }
 });
 

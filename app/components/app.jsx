@@ -1,8 +1,7 @@
-var React = require('react');
-
+var Footer = require('./footer');
 var Header = require('./header');
 var Main = require('./main');
-var Footer = require('./footer');
+var React = require('react');
 
 var App = React.createClass({
   getInitialState: function() {
@@ -27,43 +26,6 @@ var App = React.createClass({
         this.activeCount += 1;
       }
     }, this);
-  },
-
-  render: function() {
-    if (this.state.todos.length) {
-      var main =
-        <Main
-          todos={this.state.todos}
-          showing={this.state.showing}
-          editing={this.state.editing}
-          activeCount={this.activeCount}
-          handleToggle={this.handleToggle}
-          handleDestroy={this.handleDestroy}
-          handleEdit={this.handleEdit}
-          handleUpdate={this.handleUpdate}
-          handleCancel={this.handleCancel}
-          handleToggleAll={this.handleToggleAll}
-        />;
-
-      var footer =
-        <Footer
-          showing={this.state.showing}
-          activeCount={this.activeCount}
-          completedCount={this.completedCount}
-          handleShowAll={this.handleShowAll}
-          handleShowActive={this.handleShowActive}
-          handleShowCompleted={this.handleShowCompleted}
-          handleClearCompleted={this.handleClearCompleted}
-        />;
-    }
-
-    return (
-      <div>
-        <Header handleCreate={this.handleCreate}/>
-        {main}
-        {footer}
-      </div>
-    );
   },
 
   handleCreate: function(title) {
@@ -139,6 +101,39 @@ var App = React.createClass({
 
   handleShowCompleted: function() {
     this.setState({ showing: 'completed' });
+  },
+
+  render: function() {
+    if (this.state.todos.length) {
+      var main = <Main
+        activeCount={this.activeCount}
+        editing={this.state.editing}
+        handleCancel={this.handleCancel}
+        handleDestroy={this.handleDestroy}
+        handleEdit={this.handleEdit}
+        handleToggle={this.handleToggle}
+        handleToggleAll={this.handleToggleAll}
+        handleUpdate={this.handleUpdate}
+        showing={this.state.showing}
+        todos={this.state.todos}
+      />;
+
+      var footer = <Footer
+        activeCount={this.activeCount}
+        completedCount={this.completedCount}
+        handleClearCompleted={this.handleClearCompleted}
+        handleShowActive={this.handleShowActive}
+        handleShowAll={this.handleShowAll}
+        handleShowCompleted={this.handleShowCompleted}
+        showing={this.state.showing}
+      />;
+    }
+
+    return <div>
+      <Header handleCreate={this.handleCreate}/>
+      {main}
+      {footer}
+    </div>;
   }
 });
 

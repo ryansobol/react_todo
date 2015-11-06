@@ -3,21 +3,6 @@ var React = require('react');
 var ENTER_KEY = 13;
 
 var Header = React.createClass({
-  render: function() {
-    return (
-      <header className="header">
-        <h1>todos</h1>
-        <input
-          ref="newField"
-          className="new-todo"
-          placeholder="What needs to be done?"
-          autoFocus={true}
-          onKeyDown={this.handleKeyDown}
-        />
-      </header>
-    );
-  },
-
   handleKeyDown: function() {
     if (event.keyCode !== ENTER_KEY) {
       return;
@@ -32,6 +17,19 @@ var Header = React.createClass({
 
     this.props.handleCreate(title);
     node.value = '';
+  },
+
+  render: function() {
+    return <header className="header">
+      <h1>todos</h1>
+      <input
+        autoFocus={true}
+        className="new-todo"
+        onKeyDown={this.handleKeyDown}
+        placeholder="What needs to be done?"
+        ref="newField"
+      />
+    </header>;
   }
 });
 
