@@ -67,7 +67,7 @@ var Item = React.createClass({
         <input
           checked={this.props.todo.completed}
           className="toggle"
-          onChange={this.props.handleToggle}
+          onChange={this.props.handleToggle.bind(null, this.props.todo)}
           type="checkbox"
         />
 
@@ -75,7 +75,10 @@ var Item = React.createClass({
           {this.props.todo.title}
         </label>
 
-        <button className="destroy" onClick={this.props.handleDestroy} />
+        <button
+          className="destroy"
+          onClick={this.props.handleDestroy.bind(null, this.props.todo)}
+        />
       </div>
 
       <input

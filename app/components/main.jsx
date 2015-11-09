@@ -19,10 +19,10 @@ var Main = React.createClass({
       return <Item
         editing={this.props.editing}
         handleCancel={this.props.handleCancel}
-        handleDestroy={this.props.handleDestroy.bind(null, todo)}
-        handleEdit={this.props.handleEdit.bind(null, todo)}
-        handleToggle={this.props.handleToggle.bind(null, todo)}
-        handleUpdate={this.props.handleUpdate.bind(null, todo)}
+        handleDestroy={this.props.handleDestroy}
+        handleEdit={this.props.handleEdit}
+        handleToggle={this.props.handleToggle}
+        handleUpdate={this.props.handleUpdate}
         key={index}
         todo={todo}
       />;
