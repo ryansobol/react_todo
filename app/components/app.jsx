@@ -17,10 +17,10 @@ const App = React.createClass({
   },
 
   componentWillUpdate(nextProps, nextState) {
-    // eslint-disable-next-line arrow-body-style
-    const completed = nextState.todos.reduce((prev, todo) => {
-      return todo.completed ? prev + 1 : prev;
-    }, 0);
+    const completed = nextState.todos.reduce(
+      (prev, todo) => (todo.completed ? prev + 1 : prev),
+      0
+    );
 
     this.activeCount = nextState.todos.length - completed;
     this.completedCount = completed;
@@ -65,10 +65,9 @@ const App = React.createClass({
   },
 
   toggleAllTodos(completed) {
-    // eslint-disable-next-line arrow-body-style
-    const todos = this.state.todos.map((todo) => {
-      return Object.assign({}, todo, { completed });
-    });
+    const todos = this.state.todos.map(
+      (todo) => Object.assign({}, todo, { completed })
+    );
 
     this.setState({ todos });
   },

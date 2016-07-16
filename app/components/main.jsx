@@ -16,7 +16,7 @@ const Main = React.createClass({
         default:
           return true;
       }
-    }, this);
+    });
   },
 
   handleChange(event) {
@@ -24,9 +24,8 @@ const Main = React.createClass({
   },
 
   render() {
-    // eslint-disable-next-line arrow-body-style
-    const items = this.shownTodos.map((todo, index) => {
-      return <Item
+    const items = this.shownTodos.map(
+      (todo, index) => <Item
         destroyTodo={this.props.destroyTodo}
         editing={this.props.editing}
         key={index}
@@ -35,8 +34,8 @@ const Main = React.createClass({
         todo={todo}
         toggleTodo={this.props.toggleTodo}
         updateTodo={this.props.updateTodo}
-      />;
-    }, this);
+      />
+    );
 
     return <section className="main">
       <input
