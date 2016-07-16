@@ -1,13 +1,14 @@
-var Footer = require('./footer');
-var Header = require('./header');
-var Main = require('./main');
+import Footer from 'components/footer';
+import Header from 'components/header';
+import Main from 'components/main';
+import React from 'react';
 
-var App = React.createClass({
+const App = React.createClass({
   getInitialState: function() {
     return {
-      todos: [],
+      editing: null,
       showing: 'all',
-      editing: null
+      todos: []
     };
   },
 
@@ -16,124 +17,126 @@ var App = React.createClass({
   },
 
   componentWillUpdate: function(nextProps, nextState) {
-    this.activeCount = this.completedCount = 0;
+    const completed = nextState.todos.reduce(function(prev, todo) {
+      return todo.completed ? prev + 1 : prev;
+    }, 0);
 
-    nextState.todos.forEach(function(todo) {
-      if (todo.completed) {
-        this.completedCount += 1;
-      } else {
-        this.activeCount += 1;
-      }
-    }, this);
+    this.activeCount = nextState.todos.length - completed;
+    this.completedCount = completed;
   },
 
-  handleCreate: function(title) {
-    var todos = this.state.todos.concat({ title: title, completed: false });
-    this.setState({ todos: todos });
-  },
-
-  handleToggleAll: function(event) {
-    var todos = this.state.todos.map(function(todo) {
-      return Object.assign({}, todo, { completed: event.target.checked });
+  clearCompletedTodos: function() {
+    const todos = this.state.todos.filter(function(element) {
+      return !element.completed;
     });
 
     this.setState({ todos: todos });
   },
 
-  handleToggle: function(toggleTodo) {
-    var todos = this.state.todos.map(function(todo) {
-      if (toggleTodo !== todo) {
-        return todo;
-      }
-
-      return Object.assign({}, toggleTodo, {
-        completed: !toggleTodo.completed
-      });
+  createTodo: function(title) {
+    const todos = this.state.todos.concat({
+      completed: false,
+      title: title
     });
 
     this.setState({ todos: todos });
   },
 
-  handleEdit: function(todo) {
-    this.setState({ editing: todo });
-  },
-
-  handleCancel: function() {
-    this.setState({ editing: null });
-  },
-
-  handleUpdate: function(saveTodo, title) {
-    var todos = this.state.todos.map(function(todo) {
-      if (saveTodo !== todo) {
-        return todo;
-      }
-
-      return Object.assign({}, saveTodo, { title: title });
-    });
-
-    this.setState({ todos: todos, editing: null });
-  },
-
-  handleDestroy: function(destroyTodo) {
-    var todos = this.state.todos.filter(function(todo) {
-      return destroyTodo !== todo;
+  destroyTodo: function(todo) {
+    const todos = this.state.todos.filter(function(element) {
+      return todo !== element;
     });
 
     this.setState({ todos: todos });
   },
 
-  handleClearCompleted: function() {
-    var todos = this.state.todos.filter(function(todo) {
-      return !todo.completed;
-    });
-
-    this.setState({ todos: todos });
-  },
-
-  handleShowAll: function() {
-    this.setState({ showing: 'all' });
-  },
-
-  handleShowActive: function() {
+  showActiveTodos: function() {
     this.setState({ showing: 'active' });
   },
 
-  handleShowCompleted: function() {
+  showAllTodos: function() {
+    this.setState({ showing: 'all' });
+  },
+
+  showCompletedTodos: function() {
     this.setState({ showing: 'completed' });
   },
 
+  startEditting: function(todo) {
+    this.setState({ editing: todo });
+  },
+
+  stopEditting: function() {
+    this.setState({ editing: null });
+  },
+
+  toggleAllTodos: function(completed) {
+    const todos = this.state.todos.map(function(todo) {
+      return Object.assign({}, todo, { completed: completed });
+    });
+
+    this.setState({ todos: todos });
+  },
+
+  toggleTodo: function(todo) {
+    const todos = this.state.todos.map(function(element) {
+      if (todo !== element) {
+        return element;
+      }
+
+      return Object.assign({}, todo, { completed: !todo.completed });
+    });
+
+    this.setState({ todos: todos });
+  },
+
+  updateTodo: function(todo, title) {
+    const todos = this.state.todos.map(function(element) {
+      if (todo !== element) {
+        return element;
+      }
+
+      return Object.assign({}, todo, { title: title });
+    });
+
+    this.setState({ editing: null, todos: todos });
+  },
+
   render: function() {
+    let main;
+    let footer;
+
     if (this.state.todos.length) {
-      var main = <Main
+      main = <Main
         activeCount={this.activeCount}
+        destroyTodo={this.destroyTodo}
         editing={this.state.editing}
-        handleCancel={this.handleCancel}
-        handleDestroy={this.handleDestroy}
-        handleEdit={this.handleEdit}
-        handleToggle={this.handleToggle}
-        handleToggleAll={this.handleToggleAll}
-        handleUpdate={this.handleUpdate}
         showing={this.state.showing}
+        startEditting={this.startEditting}
+        stopEditting={this.stopEditting}
         todos={this.state.todos}
+        toggleAllTodos={this.toggleAllTodos}
+        toggleTodo={this.toggleTodo}
+        updateTodo={this.updateTodo}
       />;
 
-      var footer = <Footer
+      footer = <Footer
         activeCount={this.activeCount}
+        clearCompletedTodos={this.clearCompletedTodos}
         completedCount={this.completedCount}
-        handleClearCompleted={this.handleClearCompleted}
-        handleShowActive={this.handleShowActive}
-        handleShowAll={this.handleShowAll}
-        handleShowCompleted={this.handleShowCompleted}
+        showActiveTodos={this.showActiveTodos}
+        showAllTodos={this.showAllTodos}
+        showCompletedTodos={this.showCompletedTodos}
         showing={this.state.showing}
       />;
     }
 
     return <div>
-      <Header handleCreate={this.handleCreate}/>
+      <Header createTodo={this.createTodo} />
       {main}
       {footer}
     </div>;
   }
 });
 
-module.exports = App;
+export default App;

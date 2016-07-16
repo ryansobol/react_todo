@@ -1,20 +1,33 @@
-var ENTER_KEY = 13;
+import React from 'react';
+import { ENTER_KEY } from 'key_codes'
 
-var Header = React.createClass({
-  handleKeyDown: function(event) {
-    if (event.keyCode !== ENTER_KEY) {
+const Header = React.createClass({
+  getInitialState: function() {
+    return { value: '' };
+  },
+
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return nextState.value !== this.state.value;
+  },
+
+  handleChange: function(event) {
+    const nextValue = event.target.value;
+    this.setState({ value: nextValue });
+  },
+
+  handleKeyPress: function(event) {
+    if (event.which !== ENTER_KEY) {
       return;
     }
 
-    var node = this.refs.newField;
-    var title = node.value.trim();
+    const value = this.state.value.trim();
 
-    if (!title) {
+    if (!value) {
       return;
     }
 
-    this.props.handleCreate(title);
-    node.value = '';
+    this.props.createTodo(value);
+    this.setState({ value: '' });
   },
 
   render: function() {
@@ -23,12 +36,13 @@ var Header = React.createClass({
       <input
         autoFocus={true}
         className="new-todo"
-        onKeyDown={this.handleKeyDown}
+        onChange={this.handleChange}
+        onKeyPress={this.handleKeyPress}
         placeholder="What needs to be done?"
-        ref="newField"
+        value={this.state.value}
       />
     </header>;
   }
 });
 
-module.exports = Header;
+export default Header;

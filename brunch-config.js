@@ -1,13 +1,20 @@
-module.exports.config = {
+module.exports = {
   files: {
     javascripts: {
-      joinTo: 'app.js'
+      joinTo: {
+        'app.js': /^app/,
+        'vendor.js': /^node_modules/
+      }
+    },
+
+    stylesheets: {
+      joinTo: 'app.css'
     }
   },
 
   plugins: {
     babel: {
-      pattern: /\.(js|jsx)$/
+      presets: ['es2015', 'react']
     }
   }
-}
+};

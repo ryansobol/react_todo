@@ -1,9 +1,14 @@
-var Item = require('./item');
+import React from 'react';
+import Item from 'components/item';
 
-var Main = React.createClass({
-  getShownTodos: function() {
-    return this.props.todos.filter(function(todo) {
-      switch (this.props.showing) {
+const Main = React.createClass({
+  componentWillMount: function() {
+    this.shownTodos = this.props.todos;
+  },
+
+  componentWillUpdate: function(nextProps, nextState) {
+    this.shownTodos = nextProps.todos.filter(function(todo) {
+      switch (nextProps.showing) {
       case 'active':
         return !todo.completed;
       case 'completed':
@@ -14,17 +19,21 @@ var Main = React.createClass({
     }, this);
   },
 
+  handleChange: function(event) {
+    this.props.toggleAllTodos(event.target.checked);
+  },
+
   render: function() {
-    var items = this.getShownTodos().map(function(todo, index) {
+    const items = this.shownTodos.map(function(todo, index) {
       return <Item
+        destroyTodo={this.props.destroyTodo}
         editing={this.props.editing}
-        handleCancel={this.props.handleCancel}
-        handleDestroy={this.props.handleDestroy}
-        handleEdit={this.props.handleEdit}
-        handleToggle={this.props.handleToggle}
-        handleUpdate={this.props.handleUpdate}
         key={index}
+        startEditting={this.props.startEditting}
+        stopEditting={this.props.stopEditting}
         todo={todo}
+        toggleTodo={this.props.toggleTodo}
+        updateTodo={this.props.updateTodo}
       />;
     }, this);
 
@@ -32,7 +41,7 @@ var Main = React.createClass({
       <input
         checked={this.props.activeCount === 0}
         className="toggle-all"
-        onChange={this.props.handleToggleAll}
+        onChange={this.handleChange}
         type="checkbox"
       />
 
@@ -41,4 +50,4 @@ var Main = React.createClass({
   }
 });
 
-module.exports = Main;
+export default Main;

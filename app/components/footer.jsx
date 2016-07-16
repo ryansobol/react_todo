@@ -1,17 +1,22 @@
-var Footer = React.createClass({
-  pluralize: function(count, word) {
-    return count === 1 ? word : word + 's';
-  },
+import React from 'react';
 
+const Footer = React.createClass({
   isSelected: function(type) {
     return this.props.showing === type ? 'selected' : null;
   },
 
+  pluralize: function(count, word) {
+    return count === 1 ? word : word + 's';
+  },
+
   render: function() {
+    let clearButton;
+
     if (this.props.completedCount) {
-      var clearButton = <button
+      clearButton = <button
         className="clear-completed"
-        onClick={this.props.handleClearCompleted}>
+        onClick={this.props.clearCompletedTodos}
+      >
         Clear completed
       </button>;
     }
@@ -19,14 +24,16 @@ var Footer = React.createClass({
     return <footer className="footer">
       <span className="todo-count">
         <strong>{this.props.activeCount}</strong>
-        {this.pluralize(this.props.activeCount, ' item')} left
+        {' '}
+        {this.pluralize(this.props.activeCount, 'item')} left
       </span>
 
       <ul className="filters">
         <li>
           <a
             className={this.isSelected('all')}
-            onClick={this.props.handleShowAll}>
+            onClick={this.props.showAllTodos}
+          >
             All
           </a>
         </li>
@@ -34,7 +41,8 @@ var Footer = React.createClass({
         <li>
           <a
             className={this.isSelected('active')}
-            onClick={this.props.handleShowActive}>
+            onClick={this.props.showActiveTodos}
+          >
             Active
           </a>
         </li>
@@ -42,7 +50,8 @@ var Footer = React.createClass({
         <li>
           <a
             className={this.isSelected('completed')}
-            onClick={this.props.handleShowCompleted}>
+            onClick={this.props.showCompletedTodos}
+          >
             Completed
           </a>
         </li>
@@ -53,4 +62,4 @@ var Footer = React.createClass({
   }
 });
 
-module.exports = Footer;
+export default Footer;
