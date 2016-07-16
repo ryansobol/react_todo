@@ -24,7 +24,8 @@ const Main = React.createClass({
   },
 
   render() {
-    const items = this.shownTodos.map(function(todo, index) {
+    // eslint-disable-next-line arrow-body-style
+    const items = this.shownTodos.map((todo, index) => {
       return <Item
         destroyTodo={this.props.destroyTodo}
         editing={this.props.editing}
