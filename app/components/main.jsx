@@ -1,29 +1,29 @@
-import React from 'react';
 import Item from 'components/item';
+import React from 'react';
 
 const Main = React.createClass({
-  componentWillMount: function() {
+  componentWillMount() {
     this.shownTodos = this.props.todos;
   },
 
-  componentWillUpdate: function(nextProps, nextState) {
-    this.shownTodos = nextProps.todos.filter(function(todo) {
+  componentWillUpdate(nextProps, _nextState) {
+    this.shownTodos = nextProps.todos.filter((todo) => {
       switch (nextProps.showing) {
-      case 'active':
-        return !todo.completed;
-      case 'completed':
-        return todo.completed;
-      default:
-        return true;
+        case 'active':
+          return !todo.completed;
+        case 'completed':
+          return todo.completed;
+        default:
+          return true;
       }
     }, this);
   },
 
-  handleChange: function(event) {
+  handleChange(event) {
     this.props.toggleAllTodos(event.target.checked);
   },
 
-  render: function() {
+  render() {
     const items = this.shownTodos.map(function(todo, index) {
       return <Item
         destroyTodo={this.props.destroyTodo}

@@ -1,21 +1,22 @@
+import { ENTER_KEY } from 'key_codes';
 import React from 'react';
-import { ENTER_KEY } from 'key_codes'
 
 const Header = React.createClass({
-  getInitialState: function() {
+  getInitialState() {
     return { value: '' };
   },
 
-  shouldComponentUpdate: function(nextProps, nextState) {
+  shouldComponentUpdate(nextProps, nextState) {
     return nextState.value !== this.state.value;
   },
 
-  handleChange: function(event) {
+  handleChange(event) {
     const nextValue = event.target.value;
+
     this.setState({ value: nextValue });
   },
 
-  handleKeyPress: function(event) {
+  handleKeyPress(event) {
     if (event.which !== ENTER_KEY) {
       return;
     }
@@ -30,7 +31,7 @@ const Header = React.createClass({
     this.setState({ value: '' });
   },
 
-  render: function() {
+  render() {
     return <header className="header">
       <h1>todos</h1>
       <input

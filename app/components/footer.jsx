@@ -1,21 +1,37 @@
 import React from 'react';
 
 const Footer = React.createClass({
-  isSelected: function(type) {
+  handleClear() {
+    this.props.clearCompletedTodos();
+  },
+
+  handleShowActive() {
+    this.props.showActiveTodos();
+  },
+
+  handleShowAll() {
+    this.props.showAllTodos();
+  },
+
+  handleShowCompleted() {
+    this.props.showCompletedTodos();
+  },
+
+  isSelected(type) {
     return this.props.showing === type ? 'selected' : null;
   },
 
-  pluralize: function(count, word) {
-    return count === 1 ? word : word + 's';
+  pluralize(count, word) {
+    return count === 1 ? word : `${word}s`;
   },
 
-  render: function() {
+  render() {
     let clearButton;
 
     if (this.props.completedCount) {
       clearButton = <button
         className="clear-completed"
-        onClick={this.props.clearCompletedTodos}
+        onClick={this.handleClear}
       >
         Clear completed
       </button>;
@@ -32,7 +48,7 @@ const Footer = React.createClass({
         <li>
           <a
             className={this.isSelected('all')}
-            onClick={this.props.showAllTodos}
+            onClick={this.handleShowAll}
           >
             All
           </a>
@@ -41,7 +57,7 @@ const Footer = React.createClass({
         <li>
           <a
             className={this.isSelected('active')}
-            onClick={this.props.showActiveTodos}
+            onClick={this.handleShowActive}
           >
             Active
           </a>
@@ -50,7 +66,7 @@ const Footer = React.createClass({
         <li>
           <a
             className={this.isSelected('completed')}
-            onClick={this.props.showCompletedTodos}
+            onClick={this.handleShowCompleted}
           >
             Completed
           </a>

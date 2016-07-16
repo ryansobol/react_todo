@@ -1,12 +1,12 @@
+import { ENTER_KEY, ESCAPE_KEY } from 'key_codes';
 import React from 'react';
-import { ENTER_KEY, ESCAPE_KEY } from 'key_codes'
 
 const Item = React.createClass({
-  getInitialState: function() {
+  getInitialState() {
     return { title: this.props.todo.title };
   },
 
-  shouldComponentUpdate: function(nextProps, nextState) {
+  shouldComponentUpdate(nextProps, nextState) {
     return (
       nextProps.todo !== this.props.todo ||
       nextProps.editing !== this.props.editing ||
@@ -14,34 +14,35 @@ const Item = React.createClass({
     );
   },
 
-  componentDidUpdate: function(prevProps) {
+  componentDidUpdate(prevProps) {
     if (!prevProps.editing && this.props.editing) {
-      const node = this.refs.editField;
+      const node = this.editField;
+
       node.focus();
       node.setSelectionRange(0, node.value.length);
     }
   },
 
-  handleClick: function() {
+  handleClick() {
     this.props.destroyTodo(this.props.todo);
   },
 
-  handleDoubleClick: function() {
+  handleDoubleClick() {
     this.props.startEditting(this.props.todo);
     this.setState({ title: this.props.todo.title });
   },
 
-  handleChangeCheckbox: function() {
+  handleChangeCheckbox() {
     this.props.toggleTodo(this.props.todo);
   },
 
-  handleChangeTextField: function(event) {
+  handleChangeTextField(event) {
     this.setState({ title: event.target.value });
   },
 
-  handleKeyDown: function(event) {
+  handleKeyDown(event) {
     if (event.which === ENTER_KEY) {
-      this.refs.editField.blur();
+      this.editField.blur();
     }
     else if (event.which === ESCAPE_KEY) {
       event.preventDefault();
@@ -50,18 +51,23 @@ const Item = React.createClass({
     }
   },
 
-  handleBlur: function() {
+  handleBlur() {
     const title = this.state.title.trim();
 
     if (title) {
       this.props.updateTodo(this.props.todo, title);
-      this.setState({ title: title });
-    } else {
+      this.setState({ title });
+    }
+    else {
       this.props.destroyTodo(this.props.todo);
     }
   },
 
-  render: function() {
+  refEditField(ref) {
+    this.editField = ref;
+  },
+
+  render() {
     const classes = [];
 
     if (this.props.todo.completed) {
@@ -69,7 +75,7 @@ const Item = React.createClass({
     }
 
     if (this.props.editing === this.props.todo) {
-      classes.push('editing')
+      classes.push('editing');
     }
 
     return <li className={classes.join(' ')}>
@@ -90,10 +96,10 @@ const Item = React.createClass({
 
       <input
         className="edit"
-        ref="editField"
         onBlur={this.handleBlur}
         onChange={this.handleChangeTextField}
         onKeyDown={this.handleKeyDown}
+        ref={this.refEditField}
         type="text"
         value={this.state.title}
       />

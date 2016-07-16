@@ -4,7 +4,7 @@ import Main from 'components/main';
 import React from 'react';
 
 const App = React.createClass({
-  getInitialState: function() {
+  getInitialState() {
     return {
       editing: null,
       showing: 'all',
@@ -12,12 +12,13 @@ const App = React.createClass({
     };
   },
 
-  componentWillMount: function() {
+  componentWillMount() {
     this.activeCount = this.completedCount = 0;
   },
 
-  componentWillUpdate: function(nextProps, nextState) {
-    const completed = nextState.todos.reduce(function(prev, todo) {
+  componentWillUpdate(nextProps, nextState) {
+    // eslint-disable-next-line arrow-body-style
+    const completed = nextState.todos.reduce((prev, todo) => {
       return todo.completed ? prev + 1 : prev;
     }, 0);
 
@@ -25,61 +26,55 @@ const App = React.createClass({
     this.completedCount = completed;
   },
 
-  clearCompletedTodos: function() {
-    const todos = this.state.todos.filter(function(element) {
-      return !element.completed;
-    });
+  clearCompletedTodos() {
+    const todos = this.state.todos.filter((element) => !element.completed);
 
-    this.setState({ todos: todos });
+    this.setState({ todos });
   },
 
-  createTodo: function(title) {
-    const todos = this.state.todos.concat({
-      completed: false,
-      title: title
-    });
+  createTodo(title) {
+    const todos = this.state.todos.concat({ completed: false, title });
 
-    this.setState({ todos: todos });
+    this.setState({ todos });
   },
 
-  destroyTodo: function(todo) {
-    const todos = this.state.todos.filter(function(element) {
-      return todo !== element;
-    });
+  destroyTodo(todo) {
+    const todos = this.state.todos.filter((element) => todo !== element);
 
-    this.setState({ todos: todos });
+    this.setState({ todos });
   },
 
-  showActiveTodos: function() {
+  showActiveTodos() {
     this.setState({ showing: 'active' });
   },
 
-  showAllTodos: function() {
+  showAllTodos() {
     this.setState({ showing: 'all' });
   },
 
-  showCompletedTodos: function() {
+  showCompletedTodos() {
     this.setState({ showing: 'completed' });
   },
 
-  startEditting: function(todo) {
+  startEditting(todo) {
     this.setState({ editing: todo });
   },
 
-  stopEditting: function() {
+  stopEditting() {
     this.setState({ editing: null });
   },
 
-  toggleAllTodos: function(completed) {
-    const todos = this.state.todos.map(function(todo) {
-      return Object.assign({}, todo, { completed: completed });
+  toggleAllTodos(completed) {
+    // eslint-disable-next-line arrow-body-style
+    const todos = this.state.todos.map((todo) => {
+      return Object.assign({}, todo, { completed });
     });
 
-    this.setState({ todos: todos });
+    this.setState({ todos });
   },
 
-  toggleTodo: function(todo) {
-    const todos = this.state.todos.map(function(element) {
+  toggleTodo(todo) {
+    const todos = this.state.todos.map((element) => {
       if (todo !== element) {
         return element;
       }
@@ -87,22 +82,22 @@ const App = React.createClass({
       return Object.assign({}, todo, { completed: !todo.completed });
     });
 
-    this.setState({ todos: todos });
+    this.setState({ todos });
   },
 
-  updateTodo: function(todo, title) {
-    const todos = this.state.todos.map(function(element) {
+  updateTodo(todo, title) {
+    const todos = this.state.todos.map((element) => {
       if (todo !== element) {
         return element;
       }
 
-      return Object.assign({}, todo, { title: title });
+      return Object.assign({}, todo, { title });
     });
 
-    this.setState({ editing: null, todos: todos });
+    this.setState({ editing: null, todos });
   },
 
-  render: function() {
+  render() {
     let main;
     let footer;
 
