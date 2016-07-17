@@ -11,7 +11,7 @@
   "scripts": {
     "deploy": "rm -rf public; brunch build; surge public react-todo.surge.sh",
     "heroku-postbuild": "brunch build --production",
-    "lint": "eslint . --ext .js,.jsx",
+    "lint": "eslint --ext .js,.jsx --ignore-pattern public .",
     "nf": "nf start",
     "start": "brunch watch --server"
   },
