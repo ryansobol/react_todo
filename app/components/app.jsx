@@ -2,18 +2,22 @@ import Footer from 'components/footer';
 import Header from 'components/header';
 import Main from 'components/main';
 import React from 'react';
+import { withRouter } from 'react-router';
 
 const App = React.createClass({
   getInitialState() {
     return {
       editing: null,
-      showing: 'all',
       todos: []
     };
   },
 
   componentWillMount() {
     this.activeCount = this.completedCount = 0;
+
+    if (this.props.location.pathname !== '/all' && !this.state.todos.length) {
+      this.props.router.push('/all');
+    }
   },
 
   componentWillUpdate(nextProps, nextState) {
@@ -42,18 +46,6 @@ const App = React.createClass({
     const todos = this.state.todos.filter((element) => todo !== element);
 
     this.setState({ todos });
-  },
-
-  showActiveTodos() {
-    this.setState({ showing: 'active' });
-  },
-
-  showAllTodos() {
-    this.setState({ showing: 'all' });
-  },
-
-  showCompletedTodos() {
-    this.setState({ showing: 'completed' });
   },
 
   startEditting(todo) {
@@ -97,6 +89,8 @@ const App = React.createClass({
   },
 
   render() {
+    const showing = this.props.location.pathname.slice(1);
+
     let main;
     let footer;
 
@@ -105,7 +99,7 @@ const App = React.createClass({
         activeCount={this.activeCount}
         destroyTodo={this.destroyTodo}
         editing={this.state.editing}
-        showing={this.state.showing}
+        showing={showing}
         startEditting={this.startEditting}
         stopEditting={this.stopEditting}
         todos={this.state.todos}
@@ -118,10 +112,7 @@ const App = React.createClass({
         activeCount={this.activeCount}
         clearCompletedTodos={this.clearCompletedTodos}
         completedCount={this.completedCount}
-        showActiveTodos={this.showActiveTodos}
-        showAllTodos={this.showAllTodos}
-        showCompletedTodos={this.showCompletedTodos}
-        showing={this.state.showing}
+        showing={showing}
       />;
     }
 
@@ -133,4 +124,4 @@ const App = React.createClass({
   }
 });
 
-export default App;
+export default withRouter(App);

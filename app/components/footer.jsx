@@ -1,20 +1,28 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 
 const Footer = React.createClass({
   handleClear() {
+    if (this.props.showing === 'completed') {
+      this.props.router.push('/all');
+    }
+    else if (this.props.showing === 'active' && !this.props.activeCount) {
+      this.props.router.push('/all');
+    }
+
     this.props.clearCompletedTodos();
   },
 
   handleShowActive() {
-    this.props.showActiveTodos();
+    this.props.router.push('/active');
   },
 
   handleShowAll() {
-    this.props.showAllTodos();
+    this.props.router.push('/all');
   },
 
   handleShowCompleted() {
-    this.props.showCompletedTodos();
+    this.props.router.push('/completed');
   },
 
   isSelected(type) {
@@ -78,4 +86,4 @@ const Footer = React.createClass({
   }
 });
 
-export default Footer;
+export default withRouter(Footer);
