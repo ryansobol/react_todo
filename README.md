@@ -17,9 +17,10 @@
 - Compare the model using strict equality (i.e. `===`)
 - Install dependencies and use helper scripts with npm
 - Build the application with Brunch and Babel
-- Deploy to the Internet with Surge
+- Route client-side requests with React Router
+- Deploy to the Internet with Heroku
 
 ### Trade-offs
 
 - Borrowed the HTML and CSS from the [TodoMVC App Template](https://github.com/tastejs/todomvc-app-template)
-- No persistence or routing as defined by the [TodoMVC App Specification](https://github.com/tastejs/todomvc/blob/master/app-spec.md)
+- No persistence as defined by the [TodoMVC App Specification](https://github.com/tastejs/todomvc/blob/master/app-spec.md)
