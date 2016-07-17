@@ -8,7 +8,7 @@ ReactDOM.render(
     <Route component={App} path="/all" />
     <Route component={App} path="/active" />
     <Route component={App} path="/completed" />
-    <Redirect from="/" to="/all" />
+    <Redirect from="*" to="/all" />
   </Router>,
   document.getElementById('container')
 );
