@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   files: {
     javascripts: {
@@ -16,5 +18,9 @@ module.exports = {
     babel: {
       presets: ['es2015', 'react']
     }
+  },
+
+  server: {
+    command: 'nodemon --ignore app --ignore public server.js'
   }
 };
