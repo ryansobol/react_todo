@@ -11,6 +11,7 @@
   "scripts": {
     "deploy": "rm -rf public; brunch build; surge public react-todo.surge.sh",
     "lint": "eslint . --ext .js,.jsx",
+    "nf": "nf start",
     "start": "brunch watch --server"
   },
   "dependencies": {
@@ -30,6 +31,7 @@
     "css-brunch": "^2.0.0",
     "eslint": "^3.1.0",
     "eslint-config-ryansobol": "^7.6.0",
+    "foreman": "^1.4.1",
     "javascript-brunch": "^2.0.0",
     "nodemon": "^1.9.2",
     "surge": "^0.18.0",
