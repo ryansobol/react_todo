@@ -9,7 +9,7 @@
     "url": "https://github.com/ryansobol/react_todo.git"
   },
   "scripts": {
-    "heroku-postbuild": "brunch build --production",
+    "heroku-postbuild": "env LOGGY_STACKS=true brunch build --production",
     "lint": "eslint --ext .js,.jsx --ignore-pattern public .",
     "nf": "nf start",
     "start": "brunch watch --server"
