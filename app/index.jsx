@@ -10,5 +10,5 @@ ReactDOM.render(
     <Route component={App} path="/completed" />
     <Redirect from="*" to="/all" />
   </Router>,
-  document.getElementById('container')
+  document.getElementById('app')
 );

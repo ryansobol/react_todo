@@ -31,8 +31,8 @@
     "uglify-js-brunch": "^2.0.1"
   },
   "devDependencies": {
-    "eslint": "^3.1.0",
-    "eslint-config-ryansobol": "^7.7.0",
+    "eslint": "^3.2.2",
+    "eslint-config-ryansobol": "^8.0.0",
     "foreman": "^1.4.1",
     "nodemon": "^1.10.0"
   },
